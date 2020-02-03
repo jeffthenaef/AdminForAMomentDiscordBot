@@ -1,4 +1,6 @@
-//require('dotenv').config(); // REDACTED FOR SECURITY
+//require('dotenv').config();
+
+//updated jan2
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const { init, addUser, getUser, updateAccount } = require('./db')
@@ -7,7 +9,7 @@ const Joi = require('@hapi/joi');
 const ObjectID = require('mongodb').ObjectID;
 bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
-const TOKEN = '' // REDACTED FOR SECURITY
+const TOKEN = '';
 
 
 

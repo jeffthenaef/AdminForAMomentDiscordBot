@@ -1,9 +1,9 @@
 const { MongoClient, ObjectId } = require('mongodb')
 const ObjectID = require('mongodb').ObjectID;
 
-const connectionUrl = ''// REDACTED FOR SECURITY
+const connectionUrl = ''
 const dbName = 'AFAM'
-const uri ='' // REDACTED FOR SECURITY
+const uri = "";
    
 
 const selCol = 'UserPoints';
