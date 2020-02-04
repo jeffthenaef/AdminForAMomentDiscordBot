@@ -1,9 +1,9 @@
 const { MongoClient, ObjectId } = require('mongodb')
 const ObjectID = require('mongodb').ObjectID;
 
-const connectionUrl = ''
+const connectionUrl = 'mongodb+srv://jeffthenaef:Jeff9087@afamcluster-9lsu3.mongodb.net/test?retryWrites=true&w=majority'
 const dbName = 'AFAM'
-const uri = "";
+const uri = "mongodb+srv://jeffthenaef:Jeff9087@afamcluster-9lsu3.mongodb.net/test?retryWrites=true&w=majority";
    
 
 const selCol = 'UserPoints';
@@ -22,7 +22,7 @@ const addUser = (user) => {
   return collection.insertOne({Username : user, Account: 0}, function(err,res) {
     if (err) throw err;
     console.log("doc inserted");
-    console.log(res);
+    //console.log(res);
 });
 }
 
@@ -50,6 +50,24 @@ let id2 = '672802697467920424';
   )}
 
 
+const searchPostedTweets = (ID) => {
+  const collection = db.collection('PostedTweets')
+   return new Promise((resolve, reject) => {
+    collection.findOne({'tweetID' : ID}, function(err,result){
+      if(err) return;
+       //console.log(result);
+      resolve(result);
+    }
+    )
+  })
+}
 
+const updatePostedTwitterCol = (id) => {
+  const collection = db.collection("PostedTweets");
+  collection.insertOne({'tweetID':id}, function(err,res){
+    if(err) throw err;
+    console.log("doc inserted into posted twitter collection");
+  })
+}
 
-module.exports = { init, addUser, getUser, updateAccount}
+module.exports = { init, addUser, getUser, updateAccount, searchPostedTweets, updatePostedTwitterCol}

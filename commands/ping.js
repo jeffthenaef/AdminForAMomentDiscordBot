@@ -4,8 +4,9 @@ module.exports = {
 	execute(msg, args) {
 
 		const voiceChannel = msg.member.voiceChannelID;
-
-		msg.reply('pong' + voiceChannel);
+		const chatchannel = msg.channel;
+		msg.reply('pong VCID: ' + voiceChannel);
+		msg.channel.send("chat channel " +	 chatchannel.id)
         msg.channel.send('pong');
 	},
 };

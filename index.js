@@ -1,17 +1,19 @@
 //require('dotenv').config();
 
-//updated jan2
+var Twitter =  require('twitter');
+var config = require('./config');
+
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-const { init, addUser, getUser, updateAccount } = require('./db')
+const { init, addUser, getUser, updateAccount,updatePostedTwitterCol, searchPostedTweets } = require('./db')
 init();
 const Joi = require('@hapi/joi');
 const ObjectID = require('mongodb').ObjectID;
 bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
-const TOKEN = '';
+const TOKEN = 'NjcyNzU4NDcyMTU2MzgxMTg1.XjaaCQ.0BQ228jqfTuZrNa24DnOVwkT1BU';
 
-
+var T = new Twitter(config);
 
 Object.keys(botCommands).map(key => {
     bot.commands.set(botCommands[key].name, botCommands[key]);
@@ -27,7 +29,68 @@ bot.login(TOKEN);
 bot.on('ready', () => {
     console.info(`Logged in as ${bot.user.tag}!`);
     monitorGeneralChannel();
+   monitorTwitter();
+   
+    
 });
+
+function monitorTwitter(){
+    //testing twitter bot
+
+    var params = {screen_name: 'playapex'};
+T.get('statuses/user_timeline', params, function(error, tweets, response) {
+  if (!error) {
+    //console.log(tweets);
+    tweets.map((tweet)=>{
+    const {created_at, user : {screen_name}, text, id} = tweet
+    
+    //date tweet was created
+    var nd = new Date(created_at)
+      
+    
+    const todaysDate = new Date()
+
+
+    let c = new Discord.Channel;
+    c = bot.channels.get('674197719736123392') // for Blicky apex updates
+
+        //console.log(id);
+      
+   
+       
+        searchPostedTweets(id).then(data =>{
+            if(data == null)
+            {
+            
+            if(tweet != null)
+            {
+                var str = text.toString();
+               
+                if(!str.startsWith("@") && !str.startsWith("RT")){
+                    //console.log("msg: ")
+                    //console.log(text);
+                       c.send(text); 
+                       updatePostedTwitterCol(id);
+                }
+                
+                
+            }
+
+            }else 
+            {
+    
+                
+            }
+            }).catch(err => console.error(err))
+        
+  
+    });
+
+  }
+})
+
+
+};
 
 bot.on('message', msg => {
     const args = msg.content.split(/ +/);
@@ -106,3 +169,6 @@ bot.on('message', msg => {
              monitorGeneralChannel();
        }, 7000);  
     
+//        setInterval(function() {
+//         monitorGeneralChannel();
+//   }, 21600000 );  
