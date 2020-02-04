@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Michiel Mulders",
+  "author": "Jeff Naef",
   "license": "ISC",
   "dependencies": {
     "@hapi/joi": "^17.1.0",
