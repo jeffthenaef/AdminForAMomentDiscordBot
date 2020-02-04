@@ -11,7 +11,7 @@ const Joi = require('@hapi/joi');
 const ObjectID = require('mongodb').ObjectID;
 bot.commands = new Discord.Collection();
 const botCommands = require('./commands');
-const TOKEN = 'NjcyNzU4NDcyMTU2MzgxMTg1.XjaaCQ.0BQ228jqfTuZrNa24DnOVwkT1BU';
+const TOKEN = '';
 
 var T = new Twitter(config);
 
